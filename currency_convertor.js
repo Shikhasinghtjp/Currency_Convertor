@@ -15,14 +15,15 @@ const convertCurrency = (amount , rate ) =>{
 }
 
 https.get(url ,(response) =>{
+    let data = ""
     response.on('data' , (chunk) => {
         data += chunk;
     });
     response.on('end' , () => {
-        const data = JSON.parse(data).conversion_rates;
+        const rates = JSON.parse(data).conversion_rates;
         rl.question("Enter the amount you want to convert: ", (amount) => {
             rl.question("Enter the target currency you want to convert to(eg: INR, EUR, NPR): ", (currency) => {
-                const rate = rate[currency.toUpperCase()];
+                const rate = rates[currency.toUpperCase()];
                 if (rate) {
                     console.log(`${amount} USD is equal to ${convertCurrency(amount , rate )} ${currency}`);
                 } else {
